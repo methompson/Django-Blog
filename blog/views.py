@@ -23,13 +23,13 @@ def home(request):
     return render(request, 'home.html')
     
 def about(request):
-    return redirect('permanent_page', title="about")
+    return redirect('permanent_page', slug="about")
     
 def contact(request):
-    return redirect('permanent_page', title="contact")
+    return redirect('permanent_page', slug="contact")
     
-def permanent(request, title):
-    post = get_object_or_404(Post, slug=title)
+def permanent(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     return render(request, 'permanent.html', {'post': post})
 
 class PostListView(ListView):
@@ -143,9 +143,9 @@ def add_new_post(request):
     return render(request, 'new_post.html', {'form': form})
 
 @post_is_published
-def view_post(request, title):
+def view_post(request, slug):
     #redirect to proper path in case a generic 'view_post' url is found
-    post = get_object_or_404(Post, slug=title)
+    post = get_object_or_404(Post, slug=slug)
     
     if request.resolver_match.url_name == 'view_post':
         if post.category is 'A':
@@ -154,13 +154,13 @@ def view_post(request, title):
             url = 'view_blog_post'
         else:
             url = 'home'
-        return redirect(url, title=title)
+        return redirect(url, slug=slug)
     return render(request, 'post.html', {'post': post})
 
 #@user_is_author_or_su
 @login_required
-def view_draft(request, title):
-    post = get_object_or_404(Post, slug=title)
+def view_draft(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     return render(request, 'post.html', {'post': post})
 
 @method_decorator(user_is_author_or_su, name='dispatch')
