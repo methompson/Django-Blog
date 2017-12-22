@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Kakomu's Blog{% endblock %}
+
+{% block subtitle %}{{post.title}}{% endblock %}
+
+{% block content %}
+
+    <div class="card mx-auto mb-3" style="width: 99%;">
+
+        <div class="card-body pt-2 pb-0">
+            <p>{{post.get_message_as_markdown }}</p>
+        </div>
+        
+    </div>
+{% endblock %}

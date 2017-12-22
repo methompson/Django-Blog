@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load text_filter_tags %}
+
+{% block title %}Kakomu's Blog{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+        
+        {% url link post.slug as post_link %}
+        <div class="card mx-auto mb-3" style="width: 99%;">
+            <div class="card-header pt-1 pb-0">
+                <h3 class="card-title mb-1"><a href="{{ post_link }}">{{ post.title }}</a></h3>
+                <h6 class="card-subtitle mb-2 text-muted">{{ post.published_at }} by {{post.created_by.username }}</h6>
+            </div>
+        </div>
+    {% empty %}
+        <div class="jumbotron jumbotron-fluid text-black mb-3" >
+            <div class="container">
+                <h1 class="display-4" >
+                    No Posts Available Right Now.
+                </h1>
+                <p class="lead" >
+                    Please Check Back Later. Good things are coming!
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

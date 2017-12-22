@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Blog Post - {{ post.subject }}{% endblock %}
+
+{% block content %}
+    <form method="post" novalidate class="mb-2">
+        {% csrf_token %}
+        {% include 'includes/form.html' %}
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+    <div id="preview"></div>
+{% endblock %}
+
+{% block stylesheet %}
+    <link href="{% static 'css/simplemde.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/simplemde.min.js' %}"></script>
+    <script>
+        var simplemde = new SimpleMDE();
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In to Kakomu.com{% endblock %}
+
+{% block content %}
+
+    <div class="card mx-auto mb-3" style="width: 99%;">
+        <div class="card-body">
+            <h3 class="card-title">Log In</h3>
+            <form method="post">
+                {% csrf_token %}
+                {% include 'includes/form.html' %}
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+        </div>
+    </div>
+    
+
+{% endblock %}

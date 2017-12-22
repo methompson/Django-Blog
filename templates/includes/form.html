@@ -1,0 +1,73 @@
+{% load form_tags %}
+
+{% for field in form.visible_fields %}
+
+
+    {% if field|get_widget == 'CheckboxInput' %}
+        
+        <div class="form-check">
+            <label class="form-check-label">
+                {{ field|set_class:'form-check-input' }}
+                {{ field.label|title }}
+            </label>
+            {% for error in field.errors %}
+                <div class="invalid-feedback">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+        
+    {% elif field|get_widget == 'Textarea' %}
+    
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">
+                {{ field.label|title }}:
+            </label>
+            <div class="col-sm-10">
+                {{ field|set_class:'form-control' }}
+                {% for error in field.errors %}
+                    <div class="invalid-feedback">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+        
+    {% elif field|get_widget == 'Select' %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">
+                {{ field.label|title }}:
+            </label>
+            <div class="col-sm-4">
+                {{ field|set_class:'form-control' }}
+                {% for error in field.errors %}
+                    <div class="invalid-feedback">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            
+            </div>
+            
+        </div>
+    {% else %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">
+                {{ field.label|title }}:
+            </label>
+            <div class="col-sm-10">
+                {{ field|set_class:'form-control' }}
+                {% for error in field.errors %}
+                    <div class="invalid-feedback">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            
+            </div>
+            
+        </div>
+    {% endif %}
+    
+{% endfor %}
+
+<hr>

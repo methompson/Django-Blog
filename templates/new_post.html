@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add a New Blog Post{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{error}}
+        </div>
+    {% endif %}
+    <form method="post" novalidate class="mb-2">
+        {% csrf_token %}
+        {% include 'includes/form.html' %}
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+{% endblock %}
+
+{% block stylesheet %}
+    <link href="{% static 'css/simplemde.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/simplemde.min.js' %}"></script>
+    <script>
+        var simplemde = new SimpleMDE();
+    </script>
+{% endblock %}
