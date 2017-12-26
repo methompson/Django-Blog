@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Kakomu's Blog{% endblock %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid text-black mb-3" >
+        <div class="container">
+            <h1 class="display-4" >
+                I'm Sorry, That Page Doesn't Exist!
+            </h1>
+            <p class="lead" >
+                Check out my <a href="{% url 'blog_post_list' %}">Blog</a> and <a href="{% url 'article_post_list' %}">Articles</a>, though!
+            </p>
+        </div>
+        
+    </div>
+{% endblock %}

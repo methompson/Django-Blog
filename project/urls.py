@@ -50,6 +50,7 @@ urlpatterns = [
     path('site/<slug:slug>/', blog_views.permanent, name='permanent_page'),
     path('tags/<slug:tag>/', blog_views.TagsListView.as_view(), name='tag_list'),
     path('site/', blog_views.PermanentPostListView.as_view(), name='permanent_list'),
+    #path('test_404', blog_views.test_404, name='test_404'),
     
 ]
 

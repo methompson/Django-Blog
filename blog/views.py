@@ -19,6 +19,9 @@ from .models import Post
 
 # Create your views here.
 
+def test_404(request):
+    return render(request, '404.html')
+
 def home(request):
     return render(request, 'home.html')
     
