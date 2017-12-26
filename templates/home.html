@@ -40,21 +40,14 @@
                     {% endif %}
                 </div>
             {% empty %}
-                
-            
-                <div class="jumbotron jumbotron-fluid text-black mb-3" >
-                    <div class="container">
-                        <h1 class="display-4" >
-                            No Blog Posts Available Right Now.
-                        </h1>
-                        <p class="lead" >
-                            Please Check Back Later. Good things are coming!
-                        </p>
-                    </div>
-                    
+                <div class="col-md">
+                    <h2>No Blog Posts Available Right Now.</h2>
+                    <p>
+                        Please check back later. Good Things Are Coming!
+                    </p>
                 </div>
             {% endfor %}
-            {% if blog_posts|length == 2%}
+            {% if blog_posts|length == 2 %}
                 <div class="container mb-2">
                     <a href="{% url 'blog_post_list' %}">See The Full Blog</a>
                 </div>
