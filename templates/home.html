@@ -1,22 +1,110 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% load text_filter_tags %}
 
 {% block title %}Kakomu - Blog{% endblock %}
 
 {% block content %}
-    <div class="card mx-auto mb-3" style="width: 99%;">
-        <div class="card-header pt-1 pb-0">
-            <h3 class="card-title mb-1"><a href="#">Title of Post</a></h3>
-        </div>
-        <div class="card-body pt-2">
-            <h6 class="card-subtitle mb-2 text-muted">December 12, 2017</h6>
-            
-            <hr class="my-2">
-            
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor ante et pretium fringilla. Morbi ac mauris tellus. Pellentesque maximus enim at congue molestie. Maecenas varius ante id eleifend molestie. Curabitur at lectus quis sem blandit euismod at ullamcorper odio. Aenean blandit vestibulum luctus. Aliquam tristique massa dolor, quis tincidunt odio consectetur quis. Aliquam ac ex vitae velit cursus vestibulum. Praesent vitae ipsum a nunc venenatis pellentesque a et libero. Suspendisse potenti. Nam tellus orci, dapibus et nisi sed, imperdiet volutpat dolor. Sed rutrum erat ipsum, non sodales nisi ullamcorper ac. Donec sodales consequat sapien.
-                <br>
-                <br>
 
-            Praesent bibendum vestibulum velit. Proin sit amet urna consequat, venenatis ipsum ut, fermentum neque. Integer mattis eros odio, ullamcorper efficitur nisl venenatis sit amet. Quisque eros eros, dapibus a elit in, iaculis dictum magna. Cras sed felis at odio dictum pulvinar. Vivamus suscipit volutpat facilisis. Cras venenatis bibendum sem ut vehicula. Donec a faucibus nunc. Aenean viverra sem dui, id efficitur lorem pulvinar at. Nullam rutrum ac risus id suscipit. Suspendisse dapibus nec nibh ac dapibus. Cras in placerat ex. Curabitur metus justo, porttitor ut euismod in, sollicitudin sit amet diam.</p>
+    <div class="row">
+        <div class="col-sm">
+            {% for post in blog_posts %}
+        
+                {% url link post.slug as post_link %}
+                <div class="card mx-auto mb-3" style="width: 99%;">
+                    <div class="card-header pt-1 pb-0">
+                        <h3 class="card-title mb-1"><a href="{{ post_link }}">{{ post.title }}</a></h3>
+                    </div>
+                    <div class="card-body pt-2 pb-0">
+                        <h6 class="card-subtitle mb-2 text-muted">{{ post.published_at }} by {{post.created_by.username }}</h6>
+                        
+                        <hr class="my-2">
+                        {% if post.snippet %}
+                            <p>{{ post.snippet }}</p>
+                        {% else %}
+                            <p>{{ post.get_message_as_markdown|preview_text:post_link }}</p>
+                        {% endif %}
+                        
+                        {% if post.tags %}
+                            <p>Tags: {{ post.tags|tag_links }}</p>
+                        {% endif %}
+                    </div>
+                    {% if post.created_by == user or user.is_superuser %}
+                        <div class="container mb-2">
+                            <a class="btn btn-success btn-sm" href="{% url 'edit_post' post.slug%}" role="button">Edit</a>
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="setVal('{% url 'delete_post' post.slug%}')">Delete</button>
+                            {% csrf_token %}
+                        </div>
+                        
+                    {% endif %}
+                </div>
+            {% empty %}
+                
+            
+                <div class="jumbotron jumbotron-fluid text-black mb-3" >
+                    <div class="container">
+                        <h1 class="display-4" >
+                            No Blog Posts Available Right Now.
+                        </h1>
+                        <p class="lead" >
+                            Please Check Back Later. Good things are coming!
+                        </p>
+                    </div>
+                    
+                </div>
+            {% endfor %}
+            {% if blog_posts|length == 2%}
+                <div class="container mb-2">
+                    <a href="{% url 'blog_post_list' %}">See The Full Blog</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-sm">
+            {% for post in article_posts %}
+        
+                {% url link post.slug as post_link %}
+                <div class="card mx-auto mb-3" style="width: 99%;">
+                    <div class="card-header pt-1 pb-0">
+                        <h3 class="card-title mb-1"><a href="{{ post_link }}">{{ post.title }}</a></h3>
+                    </div>
+                    <div class="card-body pt-2 pb-0">
+                        <h6 class="card-subtitle mb-2 text-muted">{{ post.published_at }} by {{post.created_by.username }}</h6>
+                        
+                        <hr class="my-2">
+                        {% if post.snippet %}
+                            <p>{{ post.snippet }}</p>
+                        {% else %}
+                            <p>{{ post.get_message_as_markdown|preview_text:post_link }}</p>
+                        {% endif %}
+                        
+                        {% if post.tags %}
+                            <p>Tags: {{ post.tags|tag_links }}</p>
+                        {% endif %}
+                    </div>
+                    {% if post.created_by == user or user.is_superuser %}
+                        <div class="container mb-2">
+                            <a class="btn btn-success btn-sm" href="{% url 'edit_post' post.slug%}" role="button">Edit</a>
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="setVal('{% url 'delete_post' post.slug%}')">Delete</button>
+                            {% csrf_token %}
+                        </div>
+                        
+                    {% endif %}
+                </div>
+            {% empty %}
+                <div class="col-md">
+                    <h2>No Articles Available Right Now.</h2>
+                    <p>
+                        Please check back later. Good Things Are Coming!
+                    </p>
+                </div>
+            {% endfor %}
+            {% if article_posts|length == 2%}
+                <div class="container mb-2">
+                    <a href="{% url 'article_post_list' %}">See More Articles</a>
+                </div>
+            {% endif %}
         </div>
     </div>
+    
 {% endblock %}

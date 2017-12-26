@@ -21,9 +21,14 @@ from .models import Post
 
 def test_404(request):
     return render(request, '404.html')
+    
+def test_500(request):
+    return render(request, '500.html')
 
 def home(request):
-    return render(request, 'home.html')
+    blog_posts = Post.objects.filter(category='B').filter(published=True).order_by('-published_at')[:2]
+    article_posts = Post.objects.filter(category='A').filter(published=True).order_by('-published_at')[:2]
+    return render(request, 'home.html', {'blog_posts':blog_posts, 'article_posts':article_posts})
     
 def permanent(request, slug):
     post = get_object_or_404(Post, slug=slug)
