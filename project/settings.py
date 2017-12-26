@@ -135,4 +135,5 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 #For Use During Deployment
 #STATIC_ROOT = './static'
+STATIC_ROOT = config('STATIC_ROOT', default='')
 LOGGING_CONFIG = None
