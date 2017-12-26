@@ -133,4 +133,6 @@ STATICFILES_DIRS = [
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
-STATIC_ROOT = './static'
+#For Use During Deployment
+#STATIC_ROOT = './static'
+LOGGING_CONFIG = None

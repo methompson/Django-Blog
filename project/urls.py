@@ -47,8 +47,6 @@ urlpatterns = [
     path('articles/posts/<slug:slug>/', blog_views.view_post, name='view_article_post'),
     
     path('', blog_views.home, name='home'),
-    path('about', blog_views.about, name='about'),
-    path('contact', blog_views.contact, name='contact'),
     path('site/<slug:slug>/', blog_views.permanent, name='permanent_page'),
     path('tags/<slug:tag>/', blog_views.TagsListView.as_view(), name='tag_list'),
     path('site/', blog_views.PermanentPostListView.as_view(), name='permanent_list'),

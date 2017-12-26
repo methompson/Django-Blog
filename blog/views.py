@@ -22,12 +22,6 @@ from .models import Post
 def home(request):
     return render(request, 'home.html')
     
-def about(request):
-    return redirect('permanent_page', slug="about")
-    
-def contact(request):
-    return redirect('permanent_page', slug="contact")
-    
 def permanent(request, slug):
     post = get_object_or_404(Post, slug=slug)
     return render(request, 'permanent.html', {'post': post})
@@ -51,7 +45,7 @@ class AllPostListView(PostListView):
 class PermanentPostListView(PostListView):
     
     def get_queryset(self):
-        queryset = super().get_queryset().filter(category='P')
+        queryset = super().get_queryset().filter(category='P').order_by('slug')
         return queryset
         
     def get_context_data(self, **kwargs):
@@ -131,7 +125,7 @@ def add_new_post(request):
             elif post.category == "B":
                 url = "blog_" + url
             else:
-                url = "home"
+                url = "permanent_list"
                 
             try:
                 post.save()
@@ -183,15 +177,17 @@ class EditPost(UpdateView):
                 
         post.save()
         
-        if post.category is 'A':
-            type = "article"
-        else:
-            type = "blog"
-        
         if post.published is False or post.published_at is None:
-            url = type + '_draft_list'
+            url = '_draft_list'
         else:
-            url = type + '_post_list'
+            url = '_post_list'
+        
+        if post.category is 'A':
+            url = "article" + url
+        elif post.category is 'B':
+            url = "blog" + url
+        else:
+            url="permanent_list"
         
         return redirect(url)
         
@@ -212,7 +208,7 @@ class DeletePost(DeleteView):
         elif post.category == "B":
             url = "blog_" + url
         else:
-            url = 'home'
+            url = 'permanent_list'
         
         super().delete(self, request, *args, **kwargs)
         #sends a URL for JavaScript to handle redirection
