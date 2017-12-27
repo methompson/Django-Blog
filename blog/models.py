@@ -29,6 +29,7 @@ class Post(models.Model):
     created_by = models.ForeignKey(User, null=True, related_name='posts', on_delete=models.SET_NULL)
     updated_by = models.ForeignKey(User, blank=True, null=True, related_name='+', on_delete=models.SET_NULL)
     tags = models.CharField(blank=True, max_length=1023)
+    tag_slugs = models.CharField(blank=True, max_length=1023)
     slug = models.SlugField(unique=True)
     published = models.BooleanField()
     

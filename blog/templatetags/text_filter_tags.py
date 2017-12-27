@@ -1,6 +1,7 @@
 from datetime import date
 
 from django import template
+from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils.html import mark_safe
 
@@ -50,7 +51,7 @@ def tag_links(text):
         else:
             tag_list = tag_list+', '
             
-        tag_list = tag_list + '<a href="{0}">{1}</a>'.format(reverse('tag_list', kwargs={'tag': tag.strip()}), tag.strip())
+        tag_list = tag_list + '<a href="{0}">{1}</a>'.format(reverse('tag_list', kwargs={'tag': slugify(tag.strip())}), tag.strip())
 
     return mark_safe(tag_list)
         

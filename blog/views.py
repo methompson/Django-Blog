@@ -109,7 +109,7 @@ class ArticleDraftListView(PostListView):
         
 class TagsListView(PostListView):
     def get_queryset(self):
-        queryset = super().get_queryset().filter(tags__contains=self.kwargs['tag']).filter(published=True)
+        queryset = super().get_queryset().filter(tag_slugs__contains=self.kwargs['tag']).filter(published=True)
         return queryset
         
 @login_required
@@ -120,6 +120,16 @@ def add_new_post(request):
             post = form.save(commit=False)
             post.slug = slugify(request.POST['title'])
             post.created_by = request.user
+            
+            tag_slugs = ""
+            first = True
+            for tag in request.POST['tags'].split(','):
+                if not first:
+                    tag_slugs += ' ,'
+                first = False
+                tag_slugs += slugify(tag.strip())
+            post.tag_slugs = tag_slugs
+                    
             
             published = request.POST.get('published', False)
             if published:
@@ -182,6 +192,15 @@ class EditPost(UpdateView):
             else:
                 post.updated_at = timezone.now()
                 post.updated_by = self.request.user
+                
+        tag_slugs = ""
+        first = True
+        for tag in self.request.POST['tags'].split(','):
+            if not first:
+                tag_slugs += ' ,'
+            first = False
+            tag_slugs += slugify(tag.strip())
+        post.tag_slugs = tag_slugs
                 
         post.save()
         
