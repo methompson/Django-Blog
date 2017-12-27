@@ -11,7 +11,7 @@
         <div class="col-sm">
             {% for post in blog_posts %}
         
-                {% url link post.slug as post_link %}
+                {% url 'view_blog_post' post.slug as post_link %}
                 <div class="card mx-auto mb-3" style="width: 99%;">
                     <div class="card-header pt-1 pb-0">
                         <h3 class="card-title mb-1"><a href="{{ post_link }}">{{ post.title }}</a></h3>
@@ -56,7 +56,7 @@
         <div class="col-sm">
             {% for post in article_posts %}
         
-                {% url link post.slug as post_link %}
+                {% url 'view_article_post' post.slug as post_link %}
                 <div class="card mx-auto mb-3" style="width: 99%;">
                     <div class="card-header pt-1 pb-0">
                         <h3 class="card-title mb-1"><a href="{{ post_link }}">{{ post.title }}</a></h3>

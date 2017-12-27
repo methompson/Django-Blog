@@ -17,6 +17,10 @@
             <hr class="my-2">
             
             <p>{{post.get_message_as_markdown|style_tag:'img,img-fluid' }}</p>
+            
+            {% if post.tags %}
+                <p>Tags: {{ post.tags|tag_links }}</p>
+            {% endif %}
         </div>
         {% if post.created_by == user or user.is_superuser %}
             <div class="container mb-2">
