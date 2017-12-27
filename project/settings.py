@@ -126,6 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#TODO Remove Staticfile Dirs for production
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
